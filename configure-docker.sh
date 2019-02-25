@@ -5,7 +5,7 @@
 #After the installation or if you change of computer, launch this script to make sure
 #that this file is moved to the goinfre folder and a link is created.
 qcow="Docker.qcow2"
-file_qcow="/Users/malberte/Library/Containers/com.docker.docker/Data/vms/0/$qcow"
+file_qcow="/Users/$USER/Library/Containers/com.docker.docker/Data/vms/0/$qcow"
 link_qcow="/goinfre/$qcow"
 
 rm $link_qcow
