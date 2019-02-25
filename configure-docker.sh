@@ -8,22 +8,24 @@ qcow="Docker.qcow2"
 file_qcow="/Users/$USER/Library/Containers/com.docker.docker/Data/vms/0/$qcow"
 link_qcow="/goinfre/$qcow"
 
-rm $link_qcow
+if [ -f "$link_qcow" ]
+then
+    echo "FILE $qcowfound at $link_qcow. Deleting it..."
+    rm $link_qcow
+fi
+
+if [ -L "$file_qcow" ]
+then
+    echo "LINK $qcow found at $file_qcow. Deleting it..."
+    rm $file_qcow
+fi
+
 if [ -f "$file_qcow" ] && ! [ -L "$file_qcow" ]
 then
 	echo "$file_qcow found ! Moving and linking to $link_qcow..."
     mv $file_qcow $link_qcow
     ln -s $link_qcow $file_qcow
     echo "You saved a lot of memory and you're good to go :)"
-elif [ -L "$file_qcow" ]
-then
-    echo "A link to $link_qcow already exists. Your disk space is safe :)"
-elif [ -f "$link_qcow" ]
-then
-    echo "$qcow already exists at $link_qcow but the link doesn't exist anymore. Restoring it..."
-    ln -s $link_qcow $file_qcow
-    echo "Link restored, you're good to go :)"
 else
     echo "$qcow does not exist at $file_qcow nor at $link_qcow. Nothing to do, but remember to launch this script after Docker Desktop has started."
 fi
-chmod 777 $link_qcow
